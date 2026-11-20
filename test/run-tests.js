@@ -1,3 +1,4 @@
+
 const { readdirSync } = require("node:fs");
 const { spawn } = require("node:child_process");
 const path = require("node:path");
@@ -14,13 +15,26 @@ function testFilesIn(directory) {
 }
 
 async function run() {
-  const mongoServer = await MongoMemoryServer.create({
-    instance: { dbName: "tasksdb_test" },
-  });
-  const mongoUri = mongoServer.getUri();
+  let mongoServer;
+  let mongoUri = process.env.TEST_MONGODB_URI || process.env.MONGODB_URI;
+
+  if (mongoUri) {
+    console.log("Using external MongoDB");
+  } else {
+    mongoServer = await MongoMemoryServer.create({
+      instance: { dbName: "tasksdb_test" },
+    });
+    mongoUri = mongoServer.getUri();
+    console.log("Using MongoDB Memory Server");
+  }
+
   const files = testFilesIn(path.join(process.cwd(), "test"));
   const args = ["--require", "./test/setup.js", "--test", "--test-concurrency=1"];
-  if (process.argv.includes("--coverage")) args.unshift("--experimental-test-coverage");
+
+  if (process.argv.includes("--coverage")) {
+    args.unshift("--experimental-test-coverage");
+  }
+
   args.push(...files);
 
   const child = spawn(process.execPath, args, {
@@ -35,13 +49,23 @@ async function run() {
     },
   });
 
+  let stopped = false;
+
+  async function stopMongo() {
+    if (mongoServer && !stopped) {
+      stopped = true;
+      await mongoServer.stop();
+    }
+  }
+
   child.once("error", async (error) => {
     console.error("Could not start the test runner:", error.message);
-    await mongoServer.stop();
+    await stopMongo();
     process.exitCode = 1;
   });
+
   child.once("exit", async (code) => {
-    await mongoServer.stop();
+    await stopMongo();
     process.exitCode = code === null ? 1 : code;
   });
 }
