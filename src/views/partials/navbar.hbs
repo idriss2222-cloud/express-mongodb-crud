@@ -1,5 +1,21 @@
-<nav class="navbar navbar-dark bg-dark mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="/">CRUD Nodejs Y Mongodb</a>
+<nav class="navbar navbar-expand site-nav">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand site-brand" href="/">
+      <span class="brand-mark" aria-hidden="true">✓</span>
+      <span>Taskflow</span>
+    </a>
+
+    <div class="nav-actions">
+      {{#if currentUser}}
+        <span class="nav-greeting">Welcome, {{currentUser.username}}</span>
+        {{#if (eq currentUser.role "admin")}}
+          <a class="btn btn-sm btn-outline-light" href="/admin">Admin</a>
+        {{/if}}
+        <a class="btn btn-sm btn-outline-light" href="/logout" data-testid="logout-link">Logout</a>
+      {{else}}
+        <a class="btn btn-sm btn-outline-light" href="/login" data-testid="login-link">Log in</a>
+        <a class="btn btn-sm btn-primary" href="/register">Get started</a>
+      {{/if}}
+    </div>
   </div>
 </nav>

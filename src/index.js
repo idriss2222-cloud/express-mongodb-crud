@@ -1,5 +1,20 @@
 import app from "./app";
-import "./utils/mongoose";
+import connectDB from "./utils/mongoose";
+import { APP_PORT } from "./config";
+import ensureAdminSeed from "./utils/seedAdmin";
 
-app.listen(app.get("port"));
-console.log(`server on port ${app.get("port")}`);
+const startServer = async () => {
+  try {
+    await connectDB();
+    // optionally seed an admin user from env vars
+    await ensureAdminSeed();
+    app.listen(APP_PORT, () => {
+      console.log(`Server running on port ${APP_PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start the server:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

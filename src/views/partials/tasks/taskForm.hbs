@@ -1,13 +1,13 @@
-<div class="card card-body p-4 rounded-0 bg-dark text-white">
-  <h3>Add A Task</h3>
-  <form action="/tasks/add" method="post">
+<section class="card card-body">
+  <h3>Add a task</h3>
+  <form action="/tasks/add" method="post" data-testid="task-form">
 
     {{! Title Input }}
     <div class="mb-3">
-      <label for="title">Write a title:</label>
+      <label for="title">Task title</label>
       <input
-        id="title"
-        class="form-control rounded-0 bg-dark text-white"
+        id="title" data-testid="task-title-input"
+        class="form-control"
         type="text"
         name="title"
         placeholder="Title"
@@ -19,13 +19,13 @@
     <div class="mb-3">
       <label for="description">Description</label>
       <textarea
-        class="form-control rounded-0 bg-dark text-white"
-        name="description"
+        class="form-control"
+        name="description" data-testid="task-description-input"
         cols="80"
         placeholder="Add a Description"
       ></textarea>
     </div>
 
-    <button class="btn btn-primary" type="submit">Add</button>
+    <button class="btn btn-primary w-100" type="submit" data-testid="add-task-button">Add task</button>
   </form>
-</div>
+</section>

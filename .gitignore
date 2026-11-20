@@ -4,3 +4,15 @@ dist
 ## environment variables
 
 .env
+.env.*
+!.env.example
+# Playwright artifacts
+/test-results/
+/playwright-report/
+
+# Generated reports and temporary files
+coverage/
+tmp/
+.build-doc/
+.build-ppt/
+.tsupgrader/

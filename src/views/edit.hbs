@@ -1,33 +1,26 @@
-<div class="container">
+<main class="container page-shell">
+  <header class="page-heading">
+    <h1>Update task</h1>
+    <p>Make changes to your task details.</p>
+  </header>
   <div class="row">
-    <!--FORM-->
-    <div class="col-md-5 offset-md-3">
-      <div class="card">
+    <div class="col-md-6 offset-md-3">
+      <section class="card">
         <div class="card-body">
-          <h1>Update Task</h1>
-
           <form action="/tasks/{{task._id}}/edit" method="post">
             <div class="mb-3">
-              <input
-                class="form-control"
-                type="text"
-                name="title"
-                placeholder="Title"
-                value="{{task.title}}"
-              />
+              <label for="title">Task title</label>
+              <input id="title" class="form-control" type="text" name="title" placeholder="Title" value="{{task.title}}" />
             </div>
             <div class="mb-3">
-              <textarea
-                class="form-control"
-                name="description"
-                rows="3"
-                placeholder="Add a Description"
-              >{{task.description}}</textarea>
+              <label for="description">Description</label>
+              <textarea id="description" class="form-control" name="description" rows="3" placeholder="Add a description">{{task.description}}</textarea>
             </div>
-            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">Save changes</button>
+            <a class="btn btn-outline-light" href="/">Cancel</a>
           </form>
         </div>
-      </div>
+      </section>
     </div>
   </div>
-</div>
+</main>

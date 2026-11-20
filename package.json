@@ -2,11 +2,14 @@
   "name": "node-mongodb-crud",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-mongo": "^4.6.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.0",
     "mongoose": "^6.1.5",
     "morgan": "^1.10.0"
   },
@@ -16,13 +19,23 @@
     "@babel/node": "^7.16.7",
     "@babel/plugin-transform-runtime": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
+    "@playwright/test": "^1.53.2",
+    "c8": "^12.0.0",
+    "eslint": "^8.57.1",
+    "mongodb-memory-server-core": "^8.14.0",
     "ncp": "^2.0.0",
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "dev": "nodemon ./src --exec babel-node",
+    "dev": "nodemon --exec npx babel-node src/index.js",
     "build": "babel src -d dist && ncp src/views dist/views && ncp src/public dist/public",
-    "start": "node ./dist"
+    "start": "node ./dist",
+    "test": "npm run build && node test/run-tests.js",
+    "test:unit": "npm run build && node --test --test-concurrency=1 test/unit/*.test.js",
+    "test:e2e": "npm run build && playwright test --config=playwright.config.js",
+    "test:e2e:repeat": "npm run build && playwright test --config=playwright.config.js --repeat-each=2",
+    "test:coverage": "npm run build && node test/run-tests.js --coverage",
+    "test:load": "npm run build && node test/nonfunctional/load-test.js"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,19 @@
+<main class="auth-shell">
+  <section class="card">
+    <div class="card-body">
+      <h1>Welcome back</h1>
+      <p class="text-secondary mb-4">Log in to pick up where you left off.</p>
+      <form action="/login" method="post" data-testid="login-form">
+        <div class="mb-3">
+          <label for="username">Username</label>
+          <input id="username" data-testid="login-username" class="form-control" type="text" name="username" placeholder="Your username" autocomplete="username" required />
+        </div>
+        <div class="mb-4">
+          <label for="password">Password</label>
+          <input id="password" data-testid="login-password" class="form-control" type="password" name="password" placeholder="Your password" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn-primary w-100" type="submit" data-testid="login-submit">Log in</button>
+      </form>
+    </div>
+  </section>
+</main>
